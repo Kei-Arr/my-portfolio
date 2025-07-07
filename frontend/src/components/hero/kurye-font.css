@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Kurye Light Italic';
-    src: url('../assets/Kurye-LightItalic.otf') format('opentype');
+    src: url('../../assets/Kurye-LightItalic.otf') format('opentype');
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: 'Kurye Light';
-    src: url('../assets/Kurye-Light.otf') format('opentype');
+    src: url('../../assets/Kurye-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
