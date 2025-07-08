@@ -44,11 +44,14 @@ export default {
         "accent-foreground": "hsl(var(--accent-foreground))",
         destructive: "hsl(var(--destructive))",
       },
-              fontFamily: {
-          kurye: ["Kurye Light Italic", "Georgia", "serif"],
-          "kurye-normal": ["Kurye Light", "Georgia", "serif"],
-          sans: ["Inter", "system-ui", "sans-serif"],
-        },
+      fontFamily: {
+        "kurye-italic": ["Kurye Light Italic", "Georgia", "serif"],
+        kurye: ["Kurye Light", "Georgia", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        selino: ["Selino Regular", "Georgia", "serif"],
+        "selino-italic": ["Selino Italic", "Georgia", "serif"],
+        paris: ["Paris", "Georgia", "serif"],
+      },
       fontSize: {
         display: ["4.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
         hero: ["3.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],

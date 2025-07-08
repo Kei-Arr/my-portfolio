@@ -74,6 +74,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.reveal-up {
+  @apply translate-y-10 
+  opacity-30
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

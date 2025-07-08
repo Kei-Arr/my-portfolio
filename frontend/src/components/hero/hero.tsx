@@ -1,14 +1,14 @@
-import './hero-animations.css';
+import './hero.css';
 import { Navbar, HeroContent, HeroBackground } from '.';
 
-const HeroSection = () => {
+function HeroSection() {
   return (
-    <section className="min-h-screen w-full relative overflow-hidden">
+    <section id="home" className="min-h-screen w-full relative overflow-hidden">
       <HeroBackground />
       <Navbar />
       <HeroContent />
     </section>
   );
-};
+}
 
 export default HeroSection;

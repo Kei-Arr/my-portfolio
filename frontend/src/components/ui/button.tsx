@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        navbar: "bg-transparent border-0 shadow-none hover:bg-white/10",
+        navbar: "bg-transparent border-0 shadow-none hover:bg-white/10 !focus-visible:ring-0 focus-visible:ring-transparent !outline-none",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
