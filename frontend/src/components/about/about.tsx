@@ -45,7 +45,7 @@ function AboutMeSection() {
           </div>
 
           <div className="relative w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[380px] aspect-[4/5] reveal-up group cursor-pointer flex-shrink-0 animate-spin-slow">
-       
+
             <img
               src={regalImage}
               className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out group-hover:opacity-0 rounded-full border-4 border-burgundy-500"

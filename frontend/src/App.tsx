@@ -5,6 +5,8 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroSection from './components/hero/hero'
 import AboutMeSection from './components/about/about'
+import MyProjects from './components/projects/projects'
+import Sample from './components/github/contributions'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger); // register the hook to avoid React version discrepancies
 
@@ -13,30 +15,32 @@ function App() {
   useGSAP(() => {
     const elements = gsap.utils.toArray('.reveal-up') as Element[];
 
-    elements.forEach((element) => {
+    elements.forEach((element, index) => {
       gsap.to(element, {
-        scrollTrigger:{
+        scrollTrigger: {
           trigger: element,
-          start:'-200 bottom',
-          end:'bottom 80%',
+          start: '-150 bottom',
+          end: 'bottom 60%',
           scrub: true,
+          toggleActions: "play none none reverse"
         },
-        y:0,
+        y: 0,
         opacity: 1,
-        duration: 1,
-        ease:'power2.out'
-        
+        duration: 2.5,
+        delay: index * 0.15,
+        ease: 'power3.out'
       })
     });
   })
   return (
-  <>
-    <ReactLenis root>
-      <HeroSection />
-      <AboutMeSection />
-
-    </ReactLenis>
-  </>
+    <>
+      <ReactLenis root>
+        <HeroSection />
+        <AboutMeSection />
+        <MyProjects />
+        <Sample />
+      </ReactLenis>
+    </>
   )
 }
 
