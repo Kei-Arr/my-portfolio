@@ -78,7 +78,7 @@ const HeroContent = () => {
                 </div>
 
                 {/* Call to action buttons */}
-                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-12 animate-fade-in-delayed reveal-up">
+                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-0 animate-fade-in-delayed reveal-up">
                     <Button
                         size="lg"
                         className="group relative px-10 py-4 font-semibold rounded-full transition-all duration-300 transform hover:scale-105 border-0 overflow-hidden bg-primary-gradient shadow-burgundy text-cream-50"
