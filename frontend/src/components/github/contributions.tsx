@@ -13,7 +13,7 @@ interface ContributionDay {
     color: string;
 }
 
-export default function Sample() {
+export default function Graph() {
     const [contributions, setContributions] = useState<ContributionDay[]>([]);
     const [totalContributions, setTotalContributions] = useState(0);
     const [loading, setLoading] = useState(true);

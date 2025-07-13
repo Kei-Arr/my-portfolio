@@ -6,7 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroSection from './components/hero/hero'
 import AboutMeSection from './components/about/about'
 import MyProjects from './components/projects/projects'
-import Sample from './components/github/contributions'
+import Graph from './components/github/contributions'
+import ContactSection from './components/contact/contact';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger); // register the hook to avoid React version discrepancies
 
@@ -38,7 +39,8 @@ function App() {
         <HeroSection />
         <AboutMeSection />
         <MyProjects />
-        <Sample />
+        <Graph />
+        <ContactSection/>
       </ReactLenis>
     </>
   )
