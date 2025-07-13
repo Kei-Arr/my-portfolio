@@ -7,8 +7,8 @@ function Certifications() {
             title: 'React Developer Certification',
             issuer: 'Meta',
             date: '2024',
-            icon: '⚛️',
-            status: 'Verified',
+            icon: 'https://img.icons8.com/office/96/react.png',
+            status: 'Completed',
             description: 'Advanced React concepts, hooks, and state management'
         },
         {
@@ -16,43 +16,16 @@ function Certifications() {
             title: 'Full Stack Web Development',
             issuer: 'FreeCodeCamp',
             date: '2023',
-            icon: '🌐',
-            status: 'Completed',
+            icon: 'https://img.icons8.com/color/96/web.png',
+            status: 'In Progress',
             description: 'Complete web development bootcamp covering frontend and backend'
         },
         {
             id: 3,
-            title: 'JavaScript Algorithms',
-            issuer: 'HackerRank',
-            date: '2023',
-            icon: '🧮',
-            status: 'Gold',
-            description: 'Advanced JavaScript problem solving and algorithms'
-        },
-        {
-            id: 4,
-            title: 'Node.js Backend Development',
-            issuer: 'Udemy',
-            date: '2023',
-            icon: '🟢',
-            status: 'Certified',
-            description: 'Server-side development with Node.js and Express'
-        },
-        {
-            id: 5,
-            title: 'Database Design',
-            issuer: 'MongoDB University',
-            date: '2022',
-            icon: '🍃',
-            status: 'Certified',
-            description: 'NoSQL database design and optimization'
-        },
-        {
-            id: 6,
-            title: 'Cloud Computing',
+            title: 'MySQL Certification',
             issuer: 'AWS',
             date: '2024',
-            icon: '☁️',
+            icon: 'https://img.icons8.com/external-those-icons-lineal-color-those-icons/500/external-MySQL-programming-and-development-those-icons-lineal-color-those-icons.png',
             status: 'In Progress',
             description: 'Cloud infrastructure and deployment strategies'
         }
@@ -83,7 +56,15 @@ function Certifications() {
                             {/* Certificate Icon and Status */}
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center justify-center w-12 h-12 bg-burgundy-500/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                                    <span className="text-2xl">{cert.icon}</span>
+                                    {cert.icon.startsWith('http') ? (
+                                        <img
+                                            src={cert.icon}
+                                            alt={cert.title}
+                                            className="w-8 h-8 object-contain"
+                                        />
+                                    ) : (
+                                        <span className="text-2xl">{cert.icon}</span>
+                                    )}
                                 </div>
                                 <span className={`${getStatusColor(cert.status)} px-2 py-1 text-xs rounded-full border`}>
                                     {cert.status}
@@ -96,7 +77,7 @@ function Certifications() {
                             </h3>
 
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-burgundy-300 font-medium text-sm">
+                                <span className="text-burgundy-500 font-medium text-sm">
                                     {cert.issuer}
                                 </span>
                                 <span className="text-cream-400 text-xs">

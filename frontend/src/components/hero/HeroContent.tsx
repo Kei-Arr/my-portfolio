@@ -2,6 +2,7 @@ import { Download, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Balancer from 'react-wrap-balancer';
 import { useLenis } from 'lenis/react';
+import MatrixText from '@/components/kokonutui/matrix-text';
 
 const HeroContent = () => {
     const lenis = useLenis();
@@ -21,7 +22,7 @@ const HeroContent = () => {
             if (element) {
                 const elementTop = element.offsetTop;
                 window.scrollTo({
-                    top: elementTop -60,
+                    top: elementTop - 60,
                     behavior: 'smooth'
                 });
             }
@@ -37,14 +38,18 @@ const HeroContent = () => {
                             Hi! I'm
                         </p>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl leading-tight animate-slide-up reveal-up">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-400 to-cream-200 block font-light font-kurye-italic drop-shadow-lg reveal-up">
-                                Khaylle Rosario
-                            </span>
+                            <MatrixText
+                                text="Khaylle Rosario"
+                                className="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-400 to-cream-200 font-light font-kurye-italic drop-shadow-lg"
+                                initialDelay={800}
+                                letterAnimationDuration={300}
+                                letterInterval={80}
+                            />
                         </h1>
                         <div className="w-24 h-1 mx-auto rounded-full bg-burgundy-500 reveal-up"></div>
                     </div>
-                   
-                        <p className="text-xl md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto font-light tracking-wide animate-fade-in-delayed text-cream-50 reveal-up">
+
+                    <p className="text-xl md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto font-light tracking-wide animate-fade-in-delayed text-cream-50 reveal-up">
                         <Balancer>
                             Full Stack Developer who brings{' '}
                             <span className="font-medium text-cream-100 reveal-up">
@@ -59,8 +64,8 @@ const HeroContent = () => {
                                 meaningful impact.
                             </span>
                         </Balancer>
-                        </p>
-                  
+                    </p>
+
                 </div>
 
                 {/* Call to action buttons */}
