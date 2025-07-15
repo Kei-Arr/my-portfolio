@@ -1,111 +1,129 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
+import Cert1 from '../../assets/images/RestApiCert.png'
+import Cert2 from '../../assets/images/COC.png'
+import Cert3 from '../../assets/images/Cert3.png'
+
+interface Certification {
+    id: number;
+    image: string;
+}
 
 function Certifications() {
-    const certifications = [
+    const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
+
+    const certifications: Certification[] = [
         {
             id: 1,
-            title: 'React Developer Certification',
-            issuer: 'Meta',
-            date: '2024',
-            icon: 'https://img.icons8.com/office/96/react.png',
-            status: 'Completed',
-            description: 'Advanced React concepts, hooks, and state management'
+            image: Cert1,
         },
         {
             id: 2,
-            title: 'Full Stack Web Development',
-            issuer: 'FreeCodeCamp',
-            date: '2023',
-            icon: 'https://img.icons8.com/color/96/web.png',
-            status: 'In Progress',
-            description: 'Complete web development bootcamp covering frontend and backend'
+            image: Cert2,
         },
         {
             id: 3,
-            title: 'MySQL Certification',
-            issuer: 'AWS',
-            date: '2024',
-            icon: 'https://img.icons8.com/external-those-icons-lineal-color-those-icons/500/external-MySQL-programming-and-development-those-icons-lineal-color-those-icons.png',
-            status: 'In Progress',
-            description: 'Cloud infrastructure and deployment strategies'
+            image: Cert3,
         }
     ];
 
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case 'Verified': return 'bg-green-500/20 text-green-300 border-green-500/30';
-            case 'Gold': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-            case 'Completed': case 'Certified': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-            case 'In Progress': return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
-            default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
-        }
+    const openModal = (cert: Certification) => {
+        setSelectedCert(cert);
+        document.body.style.overflow = 'hidden'; 
     };
 
+    const closeModal = () => {
+        setSelectedCert(null);
+        document.body.style.overflow = 'unset'; 
+    };
+
+    // Handle escape key to close modal
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && selectedCert) {
+                closeModal();
+            }
+        };
+
+        if (selectedCert) {
+            document.addEventListener('keydown', handleKeyDown);
+            return () => document.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [selectedCert]);
+
+    // Clean up on unmount
+    useEffect(() => {
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
     return (
-        <div className="w-full max-w-6xl mx-auto reveal-up">
+        <div className="w-full max-w-6xl mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {certifications.map((cert, index) => (
-                    <Card
+                    <div
                         key={cert.id}
-                        className="group bg-dark-800 border-dark-700 hover:border-burgundy-500/50 transition-all duration-300 hover:scale-105 hover:shadow-burgundy/20 hover:shadow-lg reveal-up"
-                        style={{
-                            animationDelay: `${index * 0.15}s`
-                        }}
+                        className="group bg-gray-800 border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:scale-105 hover:shadow-red-500/20 hover:shadow-lg cursor-pointer rounded-lg overflow-hidden"
+                        onClick={() => openModal(cert)}
                     >
-                        <CardContent className="p-6">
-                            {/* Certificate Icon and Status */}
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="flex items-center justify-center w-12 h-12 bg-burgundy-500/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                                    {cert.icon.startsWith('http') ? (
-                                        <img
-                                            src={cert.icon}
-                                            alt={cert.title}
-                                            className="w-8 h-8 object-contain"
-                                        />
-                                    ) : (
-                                        <span className="text-2xl">{cert.icon}</span>
-                                    )}
+                        <div className="p-1">
+                            <div className="w-full h-56 bg-gradient-to-br from-red-500/20 to-gray-800 relative overflow-hidden rounded-lg">
+                                <img
+                                    src={cert.image}
+                                    alt="Certificate"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
+                                />
+                                
+                                {/* View Certificate Overlay */}
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
+                                    <div className="text-center">
+                                        <div className="bg-white/90 text-gray-900 px-6 py-3 rounded-lg font-semibold text-lg shadow-lg">
+                                            View Certificate
+                                        </div>
+                                    </div>
                                 </div>
-                                <span className={`${getStatusColor(cert.status)} px-2 py-1 text-xs rounded-full border`}>
-                                    {cert.status}
-                                </span>
                             </div>
-
-                            {/* Certificate Info */}
-                            <h3 className="text-lg font-bold text-cream-50 mb-2 group-hover:text-burgundy-300 transition-colors duration-300">
-                                {cert.title}
-                            </h3>
-
-                            <div className="flex items-center justify-between mb-3">
-                                <span className="text-burgundy-500 font-medium text-sm">
-                                    {cert.issuer}
-                                </span>
-                                <span className="text-cream-400 text-xs">
-                                    {cert.date}
-                                </span>
-                            </div>
-
-                            <p className="text-cream-300 text-xs leading-relaxed font-kurye-italic">
-                                {cert.description}
-                            </p>
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </div>
                 ))}
             </div>
 
-            <div className="mt-12 text-center reveal-up">
-                <div className="bg-dark-800 rounded-2xl p-8 border border-dark-700">
-                    <h3 className="text-2xl font-bold text-cream-50 mb-4 font-kurye-italic">
-                        Continuous Learning
-                    </h3>
-                    <p className="text-cream-300 font-kurye-italic max-w-2xl mx-auto">
-                        I believe in staying current with technology trends and continuously expanding my skill set.
-                        These certifications represent my commitment to professional growth and expertise in modern web development.
-                    </p>
+            {/* Fullscreen Modal */}
+            {selectedCert && (
+                <div
+                    className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center"
+                    style={{ zIndex: 9999 }}
+                    onClick={closeModal}
+                >
+                  
+                    <div
+                        className="relative max-w-[50vw] max-h-[80vh] mx-4"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={selectedCert.image}
+                            alt="Certificate Fullscreen"
+                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl bg-white/5 backdrop-blur-sm"
+                        />
+                        
+                      
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                closeModal();
+                            }}
+                            className="absolute -top-2 -right-2 bg-gray-800/90 hover:bg-gray-700/90 text-white rounded-full p-2 transition-colors duration-200 backdrop-blur-sm shadow-lg"
+                            style={{ zIndex: 10000 }}
+                            aria-label="Close modal"
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
 
-export default Certifications; 
+export default Certifications;

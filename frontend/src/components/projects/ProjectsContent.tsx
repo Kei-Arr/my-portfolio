@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, ChevronDown } from 'lucide-react';
 import Rentupeers from '../../assets/images/Rentupeers.png';
 import Studeospaces from '../../assets/images/Studeospaces.png';
+import GenSpace from '../../assets/images/GenSpace.png';
 import Balancer from 'react-wrap-balancer';
 
 function ProjectsContent() {
@@ -19,17 +20,17 @@ function ProjectsContent() {
             id: 2,
             title: 'Studeospaces',
             description: 'A web application that includes real-time desk/room availability checking, automated booking management, integrated payment processing, direct email communication, and administrative monitoring tools.',
-            technologies: ['React', 'Laravel', 'Tailwind', 'MySQL', 'Paymongo', 'Socket.io'],
+            technologies: ['React', 'Laravel', 'Tailwind','PHP', 'MySQL', 'Paymongo', 'Socket.io'],
             image: Studeospaces,
             demoUrl: 'https://studeospaces.vercel.app/',
         },
         {
             id: 3,
-            title: 'Weather Dashboard',
-            description: 'A responsive weather application with location-based forecasts, interactive maps, and historical weather data visualization.',
-            technologies: ['JavaScript', 'Chart.js', 'Weather API', 'CSS3'],
-            image: '🌤️',
-            demoUrl: '#',
+            title: 'Appointment System',
+            description: 'A comprehensive web-based appointment management system designed to streamline room booking and meeting scheduling for companies. The system serves as a centralized platform where organizations can manage their meeting rooms, conference spaces, and other bookable facilities while allowing employees to easily reserve these spaces for various business activities.',
+            technologies: ['React', 'Vite', 'Tailwind', 'Express', 'MongoDb','Firebase'],
+            image: GenSpace,
+            demoUrl: 'https://genspace.createelevatehub.com/',
         }
     ];
 

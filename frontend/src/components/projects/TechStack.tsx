@@ -110,12 +110,6 @@ function TechStack() {
                     </Card>
                 ))}
             </div>
-
-            <div className="mt-8 text-center reveal-up">
-                <p className="text-cream-300 text-lg font-kurye-italic">
-                    Technologies I work with to bring ideas to life
-                </p>
-            </div>
         </div>
     );
 }

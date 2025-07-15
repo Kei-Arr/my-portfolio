@@ -2,7 +2,6 @@ import { Download, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Balancer from 'react-wrap-balancer';
 import { useLenis } from 'lenis/react';
-import MatrixText from '@/components/kokonutui/matrix-text';
 
 const HeroContent = () => {
     const lenis = useLenis();
@@ -39,20 +38,7 @@ const HeroContent = () => {
                         </p>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl leading-tight animate-slide-up reveal-up">
                             <div className="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-400 to-cream-200 font-light font-kurye-italic drop-shadow-lg">
-                                <MatrixText
-                                    text="Khaylle"
-                                    className="block"
-                                    initialDelay={800}
-                                    letterAnimationDuration={300}
-                                    letterInterval={80}
-                                />
-                                <MatrixText
-                                    text="Rosario"
-                                    className="block ml-8 md:ml-12 lg:ml-16"
-                                    initialDelay={2000}
-                                    letterAnimationDuration={300}
-                                    letterInterval={80}
-                                />
+                                 Khaylle Rosario
                             </div>
                         </h1>
                         <div className="w-24 h-1 mx-auto rounded-full bg-burgundy-500 reveal-up"></div>
