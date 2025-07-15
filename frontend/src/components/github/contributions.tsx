@@ -252,7 +252,7 @@ export default function Graph() {
                 <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up max-w-4xl mx-auto">
                     <div className="bg-dark-800 rounded-xl p-4 border border-dark-700 text-center">
                         <div className="text-2xl font-bold text-burgundy-500 mb-1">
-                            {loading ? '...' : Math.max(contributions.filter(day => day.contributionCount > 0).length, 365)}
+                             {loading ? '...' : contributions.filter(day => day.contributionCount > 0).length}
                         </div>
                         <div className="text-cream-300 text-sm font-kurye-italic">Days of Code</div>
                     </div>
