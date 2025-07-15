@@ -11,6 +11,7 @@ function ProjectsContent() {
         {
             id: 1,
             title: 'Rentupeers Platform',
+            role: 'Full Stack Developer',
             description: 'A peer-to-peer rental platform to address challenges in accessing educational resources through short-term rentals.  It includes features such as rental/buy-sell, Stripe payment, real-time messaging, and transaction tracking. ',
             technologies: ['React', 'Tailwind', 'Node.js', 'MySQL', 'Stripe', 'Socket.io'],
             image: Rentupeers,
@@ -19,6 +20,7 @@ function ProjectsContent() {
         {
             id: 2,
             title: 'Studeospaces',
+            role: 'Backend Developer',
             description: 'A web application that includes real-time desk/room availability checking, automated booking management, integrated payment processing, direct email communication, and administrative monitoring tools.',
             technologies: ['React', 'Laravel', 'Tailwind','PHP', 'MySQL', 'Paymongo', 'Socket.io'],
             image: Studeospaces,
@@ -26,8 +28,9 @@ function ProjectsContent() {
         },
         {
             id: 3,
-            title: 'Appointment System',
-            description: 'A comprehensive web-based appointment management system designed to streamline room booking and meeting scheduling for companies. The system serves as a centralized platform where organizations can manage their meeting rooms, conference spaces, and other bookable facilities while allowing employees to easily reserve these spaces for various business activities.',
+            title: 'GenSpace',
+            role: 'Full Stack Developer',
+            description: 'A web-based system that simplifies room booking and meeting scheduling by allowing companies to manage spaces and employees to reserve them easily.',
             technologies: ['React', 'Vite', 'Tailwind', 'Express', 'MongoDb','Firebase'],
             image: GenSpace,
             demoUrl: 'https://genspace.createelevatehub.com/',
@@ -63,7 +66,7 @@ function ProjectsContent() {
 
                             {/* Project Info */}
                             <h3 className="text-xl font-kurye text-cream-300 mb-3 group-hover:text-burgundy-300 transition-colors duration-300">
-                                {project.title}
+                                {project.title} | <span className="text-xs font-sans text-burgundy-500">{project.role}</span>
                             </h3>
 
                             <p className="text-cream-50 text-sm leading-relaxed mb-6 font-sans">
