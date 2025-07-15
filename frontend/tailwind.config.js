@@ -7,6 +7,7 @@ export default {
       colors: {
         cream: {
           50: "#F6F0F0",
+          75: "#ABA1A3",
           100: "#EAE4D5",
           200: "#FFD7C4",
           300: "#E6D4C5",
@@ -23,6 +24,7 @@ export default {
           700: "#2A2D35",
           800: "#21242A",
           900: "#181B20",
+          1000: "#33363C",
         },
         // shadcn ui colors
         background: "hsl(var(--background))",

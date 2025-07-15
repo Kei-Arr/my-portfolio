@@ -20,19 +20,18 @@ function MyProjects() {
     };
 
     useEffect(() => {
-        // Small delay to ensure DOM is updated
+     
         const timer = setTimeout(() => {
-            // Refresh ScrollTrigger to recalculate positions
+           
             ScrollTrigger.refresh();
 
-            // Re-animate elements in the current tab
             const elements = gsap.utils.toArray('.reveal-up') as Element[];
 
             elements.forEach((element, index) => {
-                // Reset the element to initial state
+                
                 gsap.set(element, { y: 64, opacity: 0 });
 
-                // Create new animation
+              
                 gsap.to(element, {
                     scrollTrigger: {
                         trigger: element,
