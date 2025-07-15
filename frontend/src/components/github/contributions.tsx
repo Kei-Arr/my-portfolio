@@ -20,10 +20,9 @@ export default function Graph() {
     const [error, setError] = useState<string | null>(null);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
-    // Replace with your GitHub username
     const GITHUB_USERNAME = 'Kei-Arr';
 
-    // Get environment variables
+ 
     const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
     const USE_GRAPHQL = import.meta.env.VITE_USE_GITHUB_GRAPHQL === 'true';
 
@@ -40,7 +39,7 @@ export default function Graph() {
 
                 // Try GraphQL API first if token is available and enabled
                 if (GITHUB_TOKEN && USE_GRAPHQL) {
-                    console.log('Using GitHub GraphQL API...');
+            
                     data = await fetchGitHubContributions(GITHUB_USERNAME, GITHUB_TOKEN, selectedYear);
 
                     if (data) {
@@ -60,13 +59,13 @@ export default function Graph() {
 
                         setContributions(contributionData);
                         setTotalContributions(total);
-                        console.log(`✅ Loaded ${total} contributions from GraphQL API`);
+                   
                         return;
                     }
                 }
 
                 // Fallback to public API
-                console.log('Using public GitHub API...');
+               
                 data = await fetchPublicGitHubContributions(GITHUB_USERNAME, selectedYear);
 
                 if (data && data.contributions) {

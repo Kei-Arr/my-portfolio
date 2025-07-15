@@ -1,7 +1,6 @@
 export interface Technology {
     name: string;
     icon: string;
-    color?: string;
 }
 
 export const technologies: Technology[] = [
@@ -26,6 +25,10 @@ export const technologies: Technology[] = [
         icon: 'https://img.icons8.com/color/96/tailwindcss.png',
     },
     {
+        name: 'Vite',
+        icon: 'https://img.icons8.com/color/96/vite.png'
+    },
+    {
         name: 'Express',
         icon: 'https://img.icons8.com/office/96/express-js.png',
     },
@@ -36,6 +39,10 @@ export const technologies: Technology[] = [
     {
         name: 'Node.js',
         icon: 'https://img.icons8.com/fluency/96/node-js.png',
+    },
+    {
+        name: 'Redux',
+        icon:'https://img.icons8.com/external-tal-revivo-color-tal-revivo/96/external-redux-an-open-source-javascript-library-for-managing-application-state-logo-color-tal-revivo.png'
     },
     {
         name: 'MySQL',
@@ -77,7 +84,7 @@ export const technologies: Technology[] = [
 
 export const categorizedTechnologies = {
     frontend: technologies.filter(tech => 
-        ['React', 'HTML5', 'CSS3', 'Bootstrap', 'Tailwind', 'JavaScript'].includes(tech.name)
+        ['React', 'Vite','HTML5', 'CSS3', 'Bootstrap', 'Tailwind', 'JavaScript','Redux'].includes(tech.name)
     ),
     backend: technologies.filter(tech => 
         ['Node.js', 'Express', 'PHP', 'Laravel'].includes(tech.name)
