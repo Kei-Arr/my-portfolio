@@ -9,7 +9,7 @@ import MyProjects from './components/projects/projects'
 import Graph from './components/github/contributions'
 import ContactSection from './components/contact/contact';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger); // register the hook to avoid React version discrepancies
+gsap.registerPlugin(useGSAP, ScrollTrigger); 
 
 function App() {
 
