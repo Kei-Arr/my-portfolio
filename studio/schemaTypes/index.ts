@@ -1,4 +1,5 @@
-import hero from "./hero"
+import {heroType} from './hero'
+
 export const schemaTypes = [
-    hero,
+    heroType,
 ]

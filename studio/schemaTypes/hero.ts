@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 
-export default defineType({
+export const heroType = defineType({
   name: 'hero',
   title: 'Hero Section',
   type: 'document',
@@ -78,4 +78,4 @@ export default defineType({
       initialValue: 'Scroll down'
     })
   ]
-})
+});
