@@ -38,9 +38,9 @@ function ContactForm() {
         </div>
 
         <div className="space-y-4">
-       
+
           <div className="relative reveal-up">
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-400 reveal-up">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-400">
               <User size={20} />
             </div>
             <input
@@ -48,14 +48,14 @@ function ContactForm() {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              placeholder="Jane Doe"
-              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400 reveal-up"
+              placeholder="Name"
+              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400"
             />
           </div>
 
-          
+
           <div className="relative reveal-up">
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-400 reveal-up">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-400">
               <Mail size={20} />
             </div>
             <input
@@ -64,7 +64,7 @@ function ContactForm() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400 reveal-up"
+              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400"
             />
           </div>
 
@@ -80,7 +80,7 @@ function ContactForm() {
             />
           </div>
 
-      
+
           <button
             type="button"
             onClick={handleSubmit}
@@ -91,7 +91,7 @@ function ContactForm() {
           </button>
         </div>
 
-      
+
         <div className="flex justify-center gap-6 mt-8 pt-6 border-t border-gray-700 reveal-up">
           <button className="text-gray-400 hover:text-white transition-colors duration-200 bg-transparent border-none p-0 ">
             <FaLinkedin size={24} />

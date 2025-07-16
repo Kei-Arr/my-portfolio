@@ -250,4 +250,16 @@ button:focus-visible {
     scrollbar-color: #A94A4A #21242A;
     /* burgundy-500 dark-800 */
   }
+
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+
+  #home .reveal-up {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
