@@ -1,26 +1,30 @@
 import { Download, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import DownloadModal from '@/components/ui/download-modal';
 import Balancer from 'react-wrap-balancer';
 import { useLenis } from 'lenis/react';
-import { urlFor} from '@/lib/sanity';
+import { urlFor } from '@/lib/sanity';
+import { useState } from 'react';
 
 interface HeroProps {
-  data: {
-    greeting: string;
-    name: string;
-    title: string;
-    description: string;
-    highlightedWords: string[];
-    backgroundImage?: any;
-    cvFile?: any;
-    downloadButtonText: string;
-    aboutButtonText: string;
-    scrollIndicatorText: string;
-  };
+    data: {
+        greeting: string;
+        name: string;
+        title: string;
+        description: string;
+        highlightedWords: string[];
+        backgroundImage?: any;
+        cvFile?: any;
+        downloadButtonText: string;
+        aboutButtonText: string;
+        scrollIndicatorText: string;
+    };
 }
 
 const HeroContent: React.FC<HeroProps> = ({ data }) => {
     const lenis = useLenis();
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const scrollToAbout = () => {
         if (lenis) {
@@ -44,6 +48,58 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
         }
     };
 
+    // Function to handle download initiation
+    const handleDownloadClick = () => {
+        console.log('Download clicked, cvFile data:', data.cvFile);
+        setShowDownloadModal(true);
+    };
+
+    // Function to handle confirmed download
+    const handleConfirmedDownload = async () => {
+        if (!data.cvFile?.asset?.url) {
+            console.error('No CV file URL available');
+            alert('CV file not available. Please contact the administrator.');
+            setShowDownloadModal(false);
+            return;
+        }
+
+        setIsDownloading(true);
+
+        try {
+            // Get the original filename from Sanity or fallback to default
+            const originalFilename = data.cvFile.asset.originalFilename || 'RosarioKhaylle_Resume.pdf';
+
+            // Create a temporary anchor element to trigger download
+            const link = document.createElement('a');
+            link.href = data.cvFile.asset.url;
+            link.download = originalFilename; // Use the actual filename from Sanity
+            link.target = '_blank';
+
+            // Append to body, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Small delay to show the downloading state
+            setTimeout(() => {
+                setIsDownloading(false);
+                setShowDownloadModal(false);
+            }, 1000);
+
+        } catch (error) {
+            console.error('Download failed:', error);
+            setIsDownloading(false);
+            setShowDownloadModal(false);
+        }
+    };
+
+    // Function to close modal
+    const handleCloseModal = () => {
+        if (!isDownloading) {
+            setShowDownloadModal(false);
+        }
+    };
+
     // Function to highlight words in description
     const highlightWords = (text: string, wordsToHighlight: string[]) => {
         if (!wordsToHighlight || wordsToHighlight.length === 0) {
@@ -62,12 +118,8 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
         return highlightedText;
     };
 
-    const backgroundImageUrl = data.backgroundImage 
+    const backgroundImageUrl = data.backgroundImage
         ? urlFor(data.backgroundImage).url()
-        : '';
-
-    const cvFileUrl = data.cvFile 
-        ? data.cvFile.asset.url
         : '';
 
     return (
@@ -83,11 +135,7 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
             <div className="absolute inset-0 bg-dark-800/70"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20"></div>
 
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-burgundy-500/30 animate-pulse"></div>
-                <div className="absolute top-1/3 right-1/3 w-1 h-1 rounded-full bg-cream-200/40 animate-ping"></div>
-                <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-cream-100/30 animate-pulse animate-delay-1000"></div>
-            </div>
+
 
             {/* Hero Content */}
             <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-20">
@@ -108,7 +156,7 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
                         <p className="text-xl md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto font-light tracking-wide animate-fade-in-delayed text-cream-50 reveal-up">
                             <Balancer>
                                 <span>{data.title} who </span>
-                                <span 
+                                <span
                                     dangerouslySetInnerHTML={{
                                         __html: highlightWords(data.description, data.highlightedWords)
                                     }}
@@ -122,7 +170,7 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
                         <Button
                             size="lg"
                             className="group relative px-10 py-4 font-semibold rounded-full transition-all duration-300 transform hover:scale-105 border-0 overflow-hidden bg-primary-gradient shadow-burgundy text-cream-50"
-                            onClick={() => cvFileUrl && window.open(cvFileUrl, '_blank')}
+                            onClick={handleDownloadClick}
                         >
                             <span className="relative z-10 flex items-center">
                                 <Download className="w-5 h-5 mr-3 transition-transform duration-300 group-hover:translate-y-[-2px]" />
@@ -161,6 +209,15 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Download Modal */}
+            <DownloadModal
+                isOpen={showDownloadModal}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmedDownload}
+                fileName={data.cvFile?.asset?.originalFilename || 'RosarioKhaylle_Resume.pdf'}
+                isDownloading={isDownloading}
+            />
         </div>
     );
 };

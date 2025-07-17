@@ -1,84 +1,18 @@
-import React, { useState } from 'react';
-import { User, Mail, Send } from 'lucide-react';
-import { FaLinkedin, FaFacebook, FaGithub } from 'react-icons/fa'
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-}
+import { User, Mail, Send } from 'lucide-react';
+import { FaLinkedin, FaFacebook, FaGithub } from 'react-icons/fa';
+import { useContactForm, openExternalLink, socialLinks } from '../../lib';
 
 function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null;
-    message: string;
-  }>({ type: null, message: '' });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async () => {
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Please fill in all fields'
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
-
-    try {
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'Message sent successfully! I\'ll get back to you soon.'
-        });
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          message: ''
-        });
-      } else {
-        setSubmitStatus({
-          type: 'error',
-          message: data.message || 'Failed to send message. Please try again.'
-        });
-      }
-    } catch (error) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Network error. Please check your connection and try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const {
+    formData,
+    isSubmitting,
+    submitStatus,
+    isFormValid,
+    isButtonDisabled,
+    handleInputChange,
+    handleSubmit
+  } = useContactForm();
 
   return (
     <section id="contact" className="min-h-screen w-full relative overflow-hidden bg-dark-900 flex items-center justify-center py-20 px-4">
@@ -92,11 +26,10 @@ function ContactForm() {
 
         {/* Status Message */}
         {submitStatus.type && (
-          <div className={`mb-4 p-3 rounded-lg text-sm ${
-            submitStatus.type === 'success' 
-              ? 'bg-green-900 text-green-300 border border-green-700' 
-              : 'bg-red-900 text-red-300 border border-red-700'
-          }`}>
+          <div className={`mb-4 p-3 rounded-lg text-sm ${submitStatus.type === 'success'
+            ? 'bg-green-900 text-green-300 border border-green-700'
+            : 'bg-red-900 text-red-300 border border-red-700'
+            }`}>
             {submitStatus.message}
           </div>
         )}
@@ -112,7 +45,7 @@ function ContactForm() {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Name"
-              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400"
+              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#efdddd36] placeholder-gray-400"
               disabled={isSubmitting}
             />
           </div>
@@ -127,7 +60,7 @@ function ContactForm() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400"
+              className="w-full bg-dark-1000 text-white rounded-full py-4 pl-12 pr-4 focus:outline-none focus:bg-[#efdddd36] placeholder-gray-400"
               disabled={isSubmitting}
             />
           </div>
@@ -139,7 +72,7 @@ function ContactForm() {
               onChange={handleInputChange}
               placeholder="Message..."
               rows={4}
-              className="w-full bg-dark-1000 text-white rounded-2xl py-4 px-4 focus:outline-none focus:bg-[#EFDDDD99] placeholder-gray-400 resize-none reveal-up"
+              className="w-full bg-dark-1000 text-white rounded-2xl py-4 px-4 focus:outline-none focus:bg-[#efdddd36] placeholder-gray-400 resize-none reveal-up"
               disabled={isSubmitting}
             />
           </div>
@@ -147,8 +80,11 @@ function ContactForm() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="w-full bg-burgundy-500 hover:bg-burgundy-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-full transition-colors duration-200 flex items-center justify-center gap-2 reveal-up"
+            disabled={isButtonDisabled}
+            className={`w-full font-semibold py-4 rounded-full transition-colors duration-200 flex items-center justify-center gap-2 reveal-up ${isFormValid && !isSubmitting
+              ? 'bg-burgundy-600 hover:bg-burgundy-700 text-white'
+              : 'bg-burgundy-300 cursor-not-allowed text-gray-400'
+              }`}
           >
             <Send size={20} />
             {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -156,13 +92,25 @@ function ContactForm() {
         </div>
 
         <div className="flex justify-center gap-6 mt-8 pt-6 border-t border-gray-700 reveal-up">
-          <button className="text-gray-400 hover:text-white transition-colors duration-200 bg-transparent border-none p-0 ">
+          <button
+            className="text-gray-400 bg-transparent border-none p-2 !outline-none focus:outline-none"
+            onClick={() => openExternalLink(socialLinks.linkedin)}
+            aria-label="Visit LinkedIn Profile"
+          >
             <FaLinkedin size={24} />
           </button>
-          <button className="text-gray-400 hover:text-white transition-colors duration-200 bg-transparent border-none p-0 ">
+          <button
+            className="text-gray-400 bg-transparent border-none p-2 !outline-none focus:outline-none"
+            onClick={() => openExternalLink(socialLinks.facebook)}
+            aria-label="Visit Facebook Profile"
+          >
             <FaFacebook size={24} />
           </button>
-          <button className="text-gray-400 hover:text-white transition-colors duration-200 bg-transparent border-none p-0 ">
+          <button
+            className="text-gray-400 bg-transparent border-none p-2 !outline-none focus:outline-none"
+            onClick={() => openExternalLink(socialLinks.github)}
+            aria-label="Visit GitHub Profile"
+          >
             <FaGithub size={24} />
           </button>
         </div>
@@ -170,4 +118,5 @@ function ContactForm() {
     </section>
   );
 }
+
 export default ContactForm;

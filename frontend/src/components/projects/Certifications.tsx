@@ -61,7 +61,7 @@ function Certifications() {
     return (
         <div className="w-full max-w-6xl mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {certifications.map((cert, index) => (
+                {certifications.map((cert) => (
                     <div
                         key={cert.id}
                         className="group bg-gray-800 border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:scale-105 hover:shadow-red-500/20 hover:shadow-lg cursor-pointer rounded-lg overflow-hidden"

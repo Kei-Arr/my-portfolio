@@ -11,7 +11,16 @@ function HeroSection() {
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
-        const data = await client.fetch(`*[_type == "hero"][0]`);
+        const data = await client.fetch(`*[_type == "hero"][0]{
+          ...,
+          backgroundImage{
+            asset->
+          },
+          cvFile{
+            asset->
+          }
+        }`);
+        console.log('Fetched hero data:', data);
         setHeroData(data);
       } catch (error) {
         console.error('Error fetching hero data:', error);
