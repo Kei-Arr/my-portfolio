@@ -64,7 +64,7 @@ export async function fetchGitHubContributions(
 }
 
 // Keep the public API as backup (though it's now handled by backend)
-export async function fetchPublicGitHubContributions( year?: number): Promise<any> {
+export async function fetchPublicGitHubContributions(year?: number): Promise<any> {
     try {
         const targetYear = year || new Date().getFullYear();
         const response = await fetch(`${API_BASE_URL}api/github/contributions?year=${targetYear}`);
