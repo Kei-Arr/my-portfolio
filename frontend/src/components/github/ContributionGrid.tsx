@@ -7,12 +7,11 @@ interface ContributionGridProps {
   selectedYear: number;
 }
 
-const ContributionGrid: React.FC<ContributionGridProps> = ({ 
-  contributions, 
-  totalContributions, 
-  selectedYear 
+const ContributionGrid: React.FC<ContributionGridProps> = ({
+  contributions,
+  totalContributions,
+  selectedYear
 }) => {
-  // Group contributions by weeks (7 days each)
   const groupContributionsByWeeks = (contributions: ContributionDay[]) => {
     const weeks: ContributionDay[][] = [];
     for (let i = 0; i < contributions.length; i += 7) {
@@ -50,7 +49,7 @@ const ContributionGrid: React.FC<ContributionGridProps> = ({
       {/* Bottom info */}
       <div className="flex justify-between items-center text-xs text-cream-300 min-w-[800px]">
         <span className="font-medium">
-          {totalContributions.toLocaleString()} contributions in {selectedYear}
+          {totalContributions.toLocaleString()} contributions in {selectedYear === 0 ? 'the last year' : selectedYear}
         </span>
 
         <div className="flex items-center gap-2">

@@ -25,7 +25,6 @@ interface GitHubContributionResponse {
     };
 }
 
-// Helper function to get color based on contribution count
 function getContributionColor(count: number): string {
     if (count === 0) return 'bg-dark-800';
     if (count <= 3) return 'bg-cream-100/20';
@@ -39,9 +38,20 @@ async function fetchGitHubContributions(
     token: string,
     year?: number
 ): Promise<ContributionCalendar | null> {
-    const currentYear = year || new Date().getFullYear();
-    const from = `${currentYear}-01-01T00:00:00Z`;
-    const to = `${currentYear}-12-31T23:59:59Z`;
+    let from: string;
+    let to: string;
+
+    if (year && year !== new Date().getFullYear()) {
+        from = `${year}-01-01T00:00:00Z`;
+        to = `${year}-12-31T23:59:59Z`;
+    } else {
+        const today = new Date();
+        const oneYearAgo = new Date(today);
+        oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+        from = oneYearAgo.toISOString();
+        to = today.toISOString();
+    }
 
     const query = `
     query($username: String!, $from: DateTime!, $to: DateTime!) {
@@ -92,10 +102,18 @@ async function fetchGitHubContributions(
     }
 }
 
-// Fallback: Public API without authentication
+// Fallback API
 async function fetchPublicGitHubContributions(username: string, year?: number): Promise<any> {
     try {
-        const targetYear = year || new Date().getFullYear();
+        let targetYear: number;
+
+        if (year && year !== new Date().getFullYear()) {
+            targetYear = year;
+        } else {
+
+            targetYear = new Date().getFullYear();
+        }
+
         const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${targetYear}`);
 
         if (!response.ok) {
@@ -112,19 +130,18 @@ async function fetchPublicGitHubContributions(username: string, year?: number): 
 export const getGitHubContributions = async (req: express.Request, res: express.Response) => {
     try {
         const { year } = req.query;
-        const targetYear = year ? parseInt(year as string) : new Date().getFullYear();
+        const targetYear = year ? parseInt(year as string) : undefined;
         const username = 'Kei-Arr';
-
         const githubToken = process.env.GITHUB_TOKEN;
 
         let contributionData = null;
 
-        // Try GraphQL API first if token is available
+
         if (githubToken) {
             contributionData = await fetchGitHubContributions(username, githubToken, targetYear);
 
             if (contributionData) {
-                // Convert GraphQL response to frontend format
+
                 const contributions: ContributionDay[] = [];
 
                 contributionData.weeks.forEach(week => {
@@ -137,12 +154,14 @@ export const getGitHubContributions = async (req: express.Request, res: express.
                     });
                 });
 
+                const displayYear = targetYear || 'last year';
+
                 return res.status(200).json({
                     success: true,
                     data: {
                         contributions,
                         totalContributions: contributionData.totalContributions,
-                        year: targetYear,
+                        year: displayYear,
                         source: 'graphql'
                     }
                 });
@@ -166,12 +185,14 @@ export const getGitHubContributions = async (req: express.Request, res: express.
                 });
             });
 
+            const displayYear = targetYear || 'last year';
+
             return res.status(200).json({
                 success: true,
                 data: {
                     contributions,
                     totalContributions,
-                    year: targetYear,
+                    year: displayYear,
                     source: 'public'
                 }
             });

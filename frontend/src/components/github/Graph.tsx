@@ -38,7 +38,7 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({
         )}
 
         {!loading && (
-          <ContributionGrid 
+          <ContributionGrid
             contributions={contributions}
             totalContributions={totalContributions}
             selectedYear={selectedYear}
