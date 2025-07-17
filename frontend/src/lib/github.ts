@@ -30,7 +30,7 @@ export async function fetchGitHubContributions(
 ): Promise<ContributionCalendar | null> {
     try {
         const targetYear = year || new Date().getFullYear();
-        const response = await fetch(`${API_BASE_URL}/api/github/contributions?year=${targetYear}`);
+        const response = await fetch(`${API_BASE_URL}api/github/contributions?year=${targetYear}`);
 
         if (!response.ok) {
             throw new Error(`Backend API error: ${response.status}`);
@@ -67,7 +67,7 @@ export async function fetchGitHubContributions(
 export async function fetchPublicGitHubContributions( year?: number): Promise<any> {
     try {
         const targetYear = year || new Date().getFullYear();
-        const response = await fetch(`${API_BASE_URL}/api/github/contributions?year=${targetYear}`);
+        const response = await fetch(`${API_BASE_URL}api/github/contributions?year=${targetYear}`);
 
         if (!response.ok) {
             throw new Error(`API error: ${response.status}`);
