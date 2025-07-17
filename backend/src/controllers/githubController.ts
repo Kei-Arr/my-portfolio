@@ -129,10 +129,15 @@ async function fetchPublicGitHubContributions(username: string, year?: number): 
 
 export const getGitHubContributions = async (req: express.Request, res: express.Response) => {
     try {
+        console.log('🔍 GitHub API request received:', req.query);
+
         const { year } = req.query;
         const targetYear = year ? parseInt(year as string) : undefined;
         const username = 'Kei-Arr';
         const githubToken = process.env.GITHUB_TOKEN;
+
+        console.log('🔑 GitHub token available:', !!githubToken);
+        console.log('📅 Target year:', targetYear);
 
         let contributionData = null;
 
