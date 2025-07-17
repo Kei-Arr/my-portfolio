@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ChevronDown } from 'lucide-react';
 import Rentupeers from '../../assets/images/Rentupeers.png';
-import Studeospaces from '../../assets/images/Studeospaces.png';
+import Studeospaces from '../../assets/images/studeospaces.png';
 import GenSpace from '../../assets/images/GenSpace.png';
 import Balancer from 'react-wrap-balancer';
 
