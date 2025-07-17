@@ -27,7 +27,7 @@ class EmailService {
       from: `"Portfolio:" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
-      subject: `${name}(${email}) Sent you a message.`,
+      subject: `${name}(${email}) sent you a message.`,
       html: createEmailTemplate(name, email, message)
     };
 

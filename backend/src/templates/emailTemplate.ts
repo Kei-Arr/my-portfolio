@@ -7,8 +7,8 @@ export const createEmailTemplate = (
   
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <div style="background-color: #8B1538; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
-        <h2 style="margin: 0; font-size: 24px;">📧You Got An Inquiry!</h2>
+      <div style="background-color: #597445; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
+        <h2 style="margin: 0; font-size: 24px;"> 📧 You Got An Inquiry!</h2>
       </div>
       
       <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px;">
@@ -16,11 +16,10 @@ export const createEmailTemplate = (
           <h3 style="margin: 0 0 10px 0; color: #1976d2;">👤 Sender Information</h3>
           <p style="margin: 0 0 8px 0;"><strong>Name:</strong> ${name}</p>
           <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #1976d2;">${email}</a></p>
-          <p style="margin: 0; font-size: 12px; color: #666;">💡 You can reply directly to this email to respond to ${name}</p>
         </div>
         
-        <div style="background-color: white; padding: 20px; border-radius: 8px; border-left: 4px solid #8B1538;">
-          <h3 style="margin: 0 0 15px 0; color: #8B1538;">💬 Message</h3>
+        <div style="background-color: white; padding: 20px; border-radius: 8px; border-left: 4px solid #597445;">
+          <h3 style="margin: 0 0 15px 0; color: #597445;">💬 Message</h3>
           <div style="line-height: 1.6; color: #333;">
             ${message.replace(/\n/g, '<br>')}
           </div>
