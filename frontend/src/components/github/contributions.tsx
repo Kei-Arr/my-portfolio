@@ -13,7 +13,6 @@ export default function Graph() {
   const [error, setError] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState(0);
 
-  const GITHUB_USERNAME = 'Kei-Arr';
 
   useEffect(() => {
     async function loadContributions() {
@@ -23,7 +22,7 @@ export default function Graph() {
       try {
         // Call backend API - if selectedYear is 0, don't pass year parameter
         const yearParam = selectedYear === 0 ? undefined : selectedYear;
-        const data = await fetchGitHubContributions(GITHUB_USERNAME, undefined, yearParam);
+        const data = await fetchGitHubContributions(yearParam);
 
         if (data) {
           // Convert backend response
