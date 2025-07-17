@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-  fetchPublicGitHubContributions,
   fetchGitHubContributions,
-  getContributionColor,
   generateMockContributions
 } from '@/lib/github';
 import { ContributionGraph, ContributionStats } from './Index';
@@ -16,8 +14,6 @@ export default function Graph() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const GITHUB_USERNAME = 'Kei-Arr';
-  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
-  const USE_GRAPHQL = import.meta.env.VITE_USE_GITHUB_GRAPHQL === 'true';
 
   useEffect(() => {
     async function loadContributions() {
@@ -25,63 +21,34 @@ export default function Graph() {
       setError(null);
 
       try {
-        let data = null;
+        // Call backend API (no token needed on frontend!)
+        const data = await fetchGitHubContributions(GITHUB_USERNAME, undefined, selectedYear);
 
-   
-        if (GITHUB_TOKEN && USE_GRAPHQL) {
-          data = await fetchGitHubContributions(GITHUB_USERNAME, GITHUB_TOKEN, selectedYear);
-
-          if (data) {
-            // Convert GraphQL response
-            const contributionData: ContributionDay[] = [];
-            let total = data.totalContributions;
-
-            data.weeks.forEach(week => {
-              week.contributionDays.forEach(day => {
-                contributionData.push({
-                  contributionCount: day.contributionCount,
-                  date: day.date,
-                  color: getContributionColor(day.contributionCount)
-                });
-              });
-            });
-
-            setContributions(contributionData);
-            setTotalContributions(total);
-            return;
-          }
-        }
-
-        // Fallback to public API
-        data = await fetchPublicGitHubContributions(GITHUB_USERNAME, selectedYear);
-
-        if (data && data.contributions) {
-          
+        if (data) {
+          // Convert backend response
           const contributionData: ContributionDay[] = [];
-          let total = 0;
+          let total = data.totalContributions;
 
-          data.contributions.forEach((contribution: any) => {
-            const count = contribution.count || 0;
-            total += count;
-            contributionData.push({
-              contributionCount: count,
-              date: contribution.date,
-              color: getContributionColor(count)
+          data.weeks.forEach(week => {
+            week.contributionDays.forEach(day => {
+              contributionData.push({
+                contributionCount: day.contributionCount,
+                date: day.date,
+                color: day.color
+              });
             });
           });
 
           setContributions(contributionData);
           setTotalContributions(total);
-         
         } else {
-          throw new Error('No data received from APIs');
+          throw new Error('No data received from backend');
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Failed to load contributions:', err);
         setError(`Failed to load GitHub data for ${selectedYear}`);
 
         // Fallback to mock data
-     
         const mockData = generateMockContributions(selectedYear);
         setContributions(mockData);
         setTotalContributions(mockData.reduce((sum, day) => sum + day.contributionCount, 0));
@@ -91,7 +58,7 @@ export default function Graph() {
     }
 
     loadContributions();
-  }, [selectedYear, GITHUB_TOKEN, USE_GRAPHQL]);
+  }, [selectedYear]);
 
   const handleYearChange = (year: number) => {
     setSelectedYear(year);

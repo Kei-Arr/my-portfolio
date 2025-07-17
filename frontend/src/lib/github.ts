@@ -13,86 +13,81 @@ interface ContributionCalendar {
     weeks: ContributionWeek[];
 }
 
-interface GitHubContributionResponse {
+interface BackendGitHubResponse {
+    success: boolean;
     data: {
-        user: {
-            contributionsCollection: {
-                contributionCalendar: ContributionCalendar;
-            };
-        };
+        contributions: ContributionDay[];
+        totalContributions: number;
+        year: number;
+        source: string;
     };
 }
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export async function fetchGitHubContributions(
     username: string,
     token?: string,
     year?: number
 ): Promise<ContributionCalendar | null> {
-    const currentYear = year || new Date().getFullYear();
-    const from = `${currentYear}-01-01T00:00:00Z`;
-    const to = `${currentYear}-12-31T23:59:59Z`;
-
-    const query = `
-    query($username: String!, $from: DateTime!, $to: DateTime!) {
-      user(login: $username) {
-        contributionsCollection(from: $from, to: $to) {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                contributionCount
-                date
-                color
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
     try {
-        const response = await fetch('https://api.github.com/graphql', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token ? `Bearer ${token}` : '',
-            },
-            body: JSON.stringify({
-                query,
-                variables: { username, from, to }
-            }),
-        });
+        const targetYear = year || new Date().getFullYear();
+        const response = await fetch(`${API_BASE_URL}/api/github/contributions?year=${targetYear}`);
 
         if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
+            throw new Error(`Backend API error: ${response.status}`);
         }
 
-        const data: GitHubContributionResponse = await response.json();
+        const result: BackendGitHubResponse = await response.json();
 
-        if (data.data?.user?.contributionsCollection?.contributionCalendar) {
-            return data.data.user.contributionsCollection.contributionCalendar;
+        if (result.success && result.data) {
+            // Convert backend response to the format expected by the frontend
+            const weeks: ContributionWeek[] = [];
+            const contributions = result.data.contributions;
+
+            // Group contributions by weeks (7 days each)
+            for (let i = 0; i < contributions.length; i += 7) {
+                weeks.push({
+                    contributionDays: contributions.slice(i, i + 7)
+                });
+            }
+
+            return {
+                totalContributions: result.data.totalContributions,
+                weeks
+            };
         }
 
-        throw new Error('Invalid response structure');
+        throw new Error('Invalid backend response');
     } catch (error) {
-        console.error('Error fetching GitHub contributions:', error);
+        console.error('Error fetching GitHub contributions from backend:', error);
         return null;
     }
 }
 
-// Alternative: Public API without authentication (less reliable)
+// Keep the public API as backup (though it's now handled by backend)
 export async function fetchPublicGitHubContributions(username: string, year?: number): Promise<any> {
     try {
         const targetYear = year || new Date().getFullYear();
-        // Using a third-party service that scrapes GitHub's public contribution graph
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${targetYear}`);
+        const response = await fetch(`${API_BASE_URL}/api/github/contributions?year=${targetYear}`);
 
         if (!response.ok) {
             throw new Error(`API error: ${response.status}`);
         }
 
-        return await response.json();
+        const result: BackendGitHubResponse = await response.json();
+
+        if (result.success) {
+            // Transform to match expected format
+            return {
+                contributions: result.data.contributions.map(day => ({
+                    count: day.contributionCount,
+                    date: day.date
+                }))
+            };
+        }
+
+        throw new Error('Backend API error');
     } catch (error) {
         console.error('Error fetching public GitHub contributions:', error);
         return null;

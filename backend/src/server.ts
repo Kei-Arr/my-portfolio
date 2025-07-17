@@ -5,6 +5,7 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import contactRoutes from './routes/contactRoutes';
+import githubRoutes from './routes/githubRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.set('trust proxy', 1);
 
 // Routes
 app.use('/api', contactRoutes);
+app.use('/api/github', githubRoutes);
 
 // Global error handler
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
