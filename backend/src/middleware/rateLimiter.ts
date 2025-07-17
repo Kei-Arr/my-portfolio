@@ -13,8 +13,8 @@ const store: RateLimitStore = {};
 export const rateLimiter = (req: Request, res: Response, next: NextFunction): void => {
   const ip = req.ip || req.connection.remoteAddress || 'unknown';
   const now = Date.now();
-  const windowMs = 15 * 60 * 1000; // 15 minutes
-  const maxRequests = 5; // Max 5 requests per window
+  const windowMs = 15 * 60 * 1000;
+  const maxRequests = 5; 
 
   // Clean up old entries
   Object.keys(store).forEach(key => {
