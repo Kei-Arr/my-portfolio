@@ -1,6 +1,12 @@
 {
     "version": 2,
     "name": "my-portfolio-backend",
+    "builds": [
+        {
+            "src": "src/server.ts",
+            "use": "@vercel/node"
+        }
+    ],
     "routes": [
         {
             "src": "/(.*)",
@@ -9,10 +15,5 @@
     ],
     "env": {
         "NODE_ENV": "production"
-    },
-    "functions": {
-        "src/server.ts": {
-            "maxDuration": 30
-        }
     }
 }
