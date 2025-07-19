@@ -20,7 +20,6 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
     };
 
-    // Navigation function using Lenis
     const scrollToSection = (sectionId: string) => {
         if (lenis) {
             lenis.scrollTo(`#${sectionId}`, {
@@ -43,7 +42,7 @@ const Navbar = () => {
         closeMobileMenu();
     };
 
-    // Track active section and scroll position
+
     useEffect(() => {
         let ticking = false;
 
@@ -53,10 +52,10 @@ const Navbar = () => {
                     const sections = ['home', 'about', 'projects', 'contact'];
                     const scrollPosition = window.scrollY + 150;
 
-                    // Update scrolled state for navbar transparency
+                 
                     setScrolled(window.scrollY > 50);
 
-                    let currentSection = 'home'; // Default to home
+                    let currentSection = 'home';
 
                     for (const section of sections) {
                         const element = document.getElementById(section);
@@ -80,7 +79,6 @@ const Navbar = () => {
 
         handleScroll();
 
-        // Listen to scroll events with passive option for better performance
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -88,7 +86,6 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            // Check if screen is desktop size (768px and above)
             if (window.innerWidth >= 768 && isMobileMenuOpen) {
                 setIsMobileMenuOpen(false);
             }

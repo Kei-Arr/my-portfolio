@@ -8,7 +8,7 @@ import contactRoutes from './routes/contactRoutes';
 import githubRoutes from './routes/githubRoutes';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // // Debug: Log environment variables on startup
 // console.log('=== Server Startup Environment Check ===');

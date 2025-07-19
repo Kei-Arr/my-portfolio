@@ -8,20 +8,23 @@ interface ProjectsHeaderProps {
 
 function ProjectsHeader({ activeTab, onTabChange }: ProjectsHeaderProps) {
     const tabs = [
-        { 
-            id: 'tech-stack', 
-            label: 'Tech Stack', 
-            icon: <RectangleStackIcon className="w-5 h-5" />
+        {
+            id: 'tech-stack',
+            label: 'Tech Stack',
+            icon: <RectangleStackIcon className="w-5 h-5" />,
+            mobileLabel: 'Tech'
         },
-        { 
-            id: 'projects', 
-            label: 'Projects', 
-            icon: <CodeBracketIcon className="w-5 h-5" />
+        {
+            id: 'projects',
+            label: 'Projects',
+            icon: <CodeBracketIcon className="w-5 h-5" />,
+            mobileLabel: 'Projects'
         },
-        { 
-            id: 'certifications', 
+        {
+            id: 'certifications',
             label: 'Certifications',
-            icon: <TrophyIcon className="w-5 h-5" />
+            icon: <TrophyIcon className="w-5 h-5" />,
+            mobileLabel: 'Certs'
         }
     ];
 
@@ -60,7 +63,7 @@ function ProjectsHeader({ activeTab, onTabChange }: ProjectsHeaderProps) {
                                     }`}
                             >
                                 <span className="text-lg">{tab.icon}</span>
-                                <span className="text-xs font-medium leading-tight">{tab.label.split(' ')[0]}</span>
+                                <span className="text-xs font-medium leading-tight">{tab.mobileLabel}</span>
                             </button>
                         ))}
                     </div>

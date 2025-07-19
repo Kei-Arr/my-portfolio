@@ -48,13 +48,12 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
         }
     };
 
-    // Function to handle download initiation
+   
     const handleDownloadClick = () => {
         console.log('Download clicked, cvFile data:', data.cvFile);
         setShowDownloadModal(true);
     };
 
-    // Function to handle confirmed download
     const handleConfirmedDownload = async () => {
         if (!data.cvFile?.asset?.url) {
             console.error('No CV file URL available');
@@ -66,21 +65,21 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
         setIsDownloading(true);
 
         try {
-            // Get the original filename from Sanity or fallback to default
+     
             const originalFilename = data.cvFile.asset.originalFilename || 'RosarioKhaylle_Resume.pdf';
 
-            // Create a temporary anchor element to trigger download
+           
             const link = document.createElement('a');
             link.href = data.cvFile.asset.url;
-            link.download = originalFilename; // Use the actual filename from Sanity
+            link.download = originalFilename;
             link.target = '_blank';
 
-            // Append to body, click, and remove
+        
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
-            // Small delay to show the downloading state
+      
             setTimeout(() => {
                 setIsDownloading(false);
                 setShowDownloadModal(false);
@@ -93,14 +92,12 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
         }
     };
 
-    // Function to close modal
     const handleCloseModal = () => {
         if (!isDownloading) {
             setShowDownloadModal(false);
         }
     };
 
-    // Function to highlight words in description
     const highlightWords = (text: string, wordsToHighlight: string[]) => {
         if (!wordsToHighlight || wordsToHighlight.length === 0) {
             return text;
@@ -169,31 +166,31 @@ const HeroContent: React.FC<HeroProps> = ({ data }) => {
                     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-0 animate-fade-in-delayed reveal-up">
                         <Button
                             size="lg"
-                            className="group relative px-10 py-4 font-semibold rounded-full transition-all duration-300 transform hover:scale-105 border-0 overflow-hidden bg-primary-gradient shadow-burgundy text-cream-50"
+                            className="group relative px-10 w-[200px]  rounded-full transition-all duration-300 transform hover:scale-105 border-0 overflow-hidden bg-primary-gradient shadow-burgundy text-cream-50"
                             onClick={handleDownloadClick}
                         >
-                            <span className="relative z-10 flex items-center">
-                                <Download className="w-5 h-5 mr-3 transition-transform duration-300 group-hover:translate-y-[-2px]" />
-                                {data.downloadButtonText}
+                            <span className="z-10 grid grid-cols-[auto_1fr] items-center justify-center gap-1">
+                                <Download className="w-5 h-5 mr-3 flex-shrink-0 self-center" />
+                                <span className="self-center">{data.downloadButtonText}</span>
                             </span>
                             <div className="absolute inset-0 bg-glass-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </Button>
 
                         <Button
                             size="lg"
-                            className="group relative px-10 py-4 font-semibold rounded-full transition-all duration-300 transform hover:scale-105 border-2 border-cream-100/30 hover:border-cream-100/50 backdrop-blur-sm overflow-hidden bg-dark-800/80 shadow-dark text-cream-50"
+                            className="group relative px-10 w-[200px] rounded-full transition-all duration-300 transform hover:scale-105 border-2 border-cream-100/30 hover:border-cream-100/50 backdrop-blur-sm overflow-hidden bg-dark-800/80 shadow-dark text-cream-50"
                             onClick={scrollToAbout}
                         >
-                            <span className="relative z-10 flex items-center">
-                                <User className="w-5 h-5 mr-3 transition-transform duration-300 group-hover:rotate-12" />
-                                {data.aboutButtonText}
+                            <span className="z-10 grid grid-cols-[auto_1fr] items-center justify-center">
+                                <User className="w-5 h-5 mr-3 flex-shrink-0 self-center" />
+                                <span className="self-center">{data.aboutButtonText}</span>
                             </span>
                             <div className="absolute inset-0 bg-glass-shimmer-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 reveal-up"></div>
                         </Button>
                     </div>
                 </div>
 
-                {/* Scroll Indicator */}
+                {/* Scroll*/}
                 <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 z-10">
                     <div
                         className="flex flex-col items-center cursor-pointer group mt-8 sm:mt-0 hover:text-gray-300 transition-colors duration-300"

@@ -11,7 +11,7 @@ export default function Graph() {
   const [totalContributions, setTotalContributions] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState(0);
+  const [selectedYear, setSelectedYear] = useState(2025);
 
 
   useEffect(() => {
@@ -20,9 +20,7 @@ export default function Graph() {
       setError(null);
 
       try {
-        // Call backend API - if selectedYear is 0, don't pass year parameter
-        const yearParam = selectedYear === 0 ? undefined : selectedYear;
-        const data = await fetchGitHubContributions(yearParam);
+        const data = await fetchGitHubContributions(selectedYear);
 
         if (data) {
           // Convert backend response
@@ -46,10 +44,13 @@ export default function Graph() {
         }
       } catch (err: any) {
         console.error('Failed to load contributions:', err);
-        setError(`Failed to load GitHub data for ${selectedYear === 0 ? 'last year' : selectedYear}`);
+        console.log(`⚠️ Frontend: Falling back to mock data for year ${selectedYear}`);
+        setError(`Failed to load GitHub data for ${selectedYear}`);
 
         // Fallback to mock data
-        const mockData = generateMockContributions(selectedYear === 0 ? new Date().getFullYear() : selectedYear);
+        const mockData = generateMockContributions(selectedYear);
+        console.log(`🎭 Frontend: Generated ${mockData.length} mock days`);
+        console.log(`📅 Frontend: Mock date range: ${mockData[0]?.date} to ${mockData[mockData.length - 1]?.date}`);
         setContributions(mockData);
         setTotalContributions(mockData.reduce((sum, day) => sum + day.contributionCount, 0));
       } finally {

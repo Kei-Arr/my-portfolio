@@ -23,7 +23,7 @@ interface BackendGitHubResponse {
     };
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export async function fetchGitHubContributions(
     year?: number
@@ -105,8 +105,13 @@ export function getContributionColor(count: number): string {
 export function generateMockContributions(year?: number): ContributionDay[] {
     const contributions: ContributionDay[] = [];
     const targetYear = year || new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
+    const today = new Date();
+
     const startDate = new Date(targetYear, 0, 1);
-    const endDate = new Date(targetYear, 11, 31);
+    const endDate = targetYear === currentYear
+        ? today  // For current year, only go up to today
+        : new Date(targetYear, 11, 31); // For past years, go to end of year
 
     const currentDate = new Date(startDate);
     while (currentDate <= endDate) {
